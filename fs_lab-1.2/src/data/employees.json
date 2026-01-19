@@ -1,0 +1,92 @@
+[
+  {
+    "departmentName": "Administration",
+    "employees": [
+      { "firstName": "Zoë", "lastName": "Robins" },
+      { "firstName": "Madeleine", "lastName": "Madden" }
+    ]
+  },
+  {
+    "departmentName": "Audit",
+    "employees": [
+      { "firstName": "Josha", "lastName": "Sadowski" },
+      { "firstName": "Kate", "lastName": "Fleetwood" }
+    ]
+  },
+  {
+    "departmentName": "Banking Operations",
+    "employees": [
+      { "firstName": "Priyanka", "lastName": "Bose" },
+      { "firstName": "Hammed", "lastName": "Animashaun" },
+      { "firstName": "Álvaro", "lastName": "Morte" },
+      { "firstName": "Taylor", "lastName": "Napier" },
+      { "firstName": "Alan", "lastName": "Simmonds" }
+    ]
+  },
+  {
+    "departmentName": "Communications",
+    "employees": [
+      { "firstName": "Gil", "lastName": "Cardinal" },
+      { "firstName": "Richard J.", "lastName": "Lewis" }
+    ]
+  },
+  {
+    "departmentName": "Corporate Services",
+    "employees": [
+      { "firstName": "Randy", "lastName": "Bradshaw" },
+      { "firstName": "Tracey", "lastName": "Cook" },
+      { "firstName": "Lubomir", "lastName": "Mykytiuk" }
+    ]
+  },
+  {
+    "departmentName": "Facilities",
+    "employees": [
+      { "firstName": "Dakota", "lastName": "House" },
+      { "firstName": "Lori Lea", "lastName": "Okemah" },
+      { "firstName": "Renae", "lastName": "Morrisseau" }
+    ]
+  },
+  {
+    "departmentName": "Financial Services",
+    "employees": [
+      { "firstName": "Selina", "lastName": "Hanusa" },
+      { "firstName": "Buffy", "lastName": "Gaundry" },
+      { "firstName": "Shaneen Ann", "lastName": "Fox" },
+      { "firstName": "Allan", "lastName": "Little" },
+      { "firstName": "Danny", "lastName": "Rabbit" }
+    ]
+  },
+  {
+    "departmentName": "Human Resources",
+    "employees": [
+      { "firstName": "Jesse Ed", "lastName": "Azure" },
+      { "firstName": "Stacy", "lastName": "Da Silva" },
+      { "firstName": "Vladimír", "lastName": "Valenta" },
+      { "firstName": "Samone", "lastName": "Sayeses-Whitney" },
+      { "firstName": "Paul", "lastName": "Coeur" }
+    ]
+  },
+  {
+    "departmentName": "Information Technology",
+    "employees": [
+      { "firstName": "Graham", "lastName": "Greene" },
+      { "firstName": "Sandika", "lastName": "Evergreen" },
+      { "firstName": "Jennifer", "lastName": "Rodriguez" }
+    ]
+  },
+  {
+    "departmentName": "IT Technician",
+    "employees": [
+      { "firstName": "Aiyana", "lastName": "Littlebear" },
+      { "firstName": "Inara", "lastName": "Thunderbird" },
+      { "firstName": "Kaya", "lastName": "Runningbrook" },
+      { "firstName": "Elara", "lastName": "Firehawk" },
+      { "firstName": "Siona", "lastName": "Moonflower" },
+      { "firstName": "Kaiyu", "lastName": "Greywolf" },
+      { "firstName": "Ayawamat", "lastName": "Nightwind" },
+      { "firstName": "Tala", "lastName": "Braveheart" },
+      { "firstName": "Iniko", "lastName": "Stonebear" },
+      { "firstName": "Onatah", "lastName": "Redhawk" }
+    ]
+  }
+]
