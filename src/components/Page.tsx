@@ -4,7 +4,7 @@ import Main from "./Main"
 import { useState } from "react"
 import type { Department, Employee } from "../types/Employee"
 import employeeData from "../data/employees.json"
-import AddEmployeeToList from "./addEmployeeToList"
+import AddEmployeeToList from "./AddEmployeeToList"
 
 function Page() {
   const [departments, setDepartments] = useState<Department[]>(employeeData)
