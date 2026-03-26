@@ -1,43 +1,79 @@
 import { useState } from "react"
-import type { Department, Employee } from "../../types/Employee"
+import type { Department } from "../../types/Employee"
+import { useFormInput } from "../../hooks/useFormInput"
+import { employeeService } from "../../services/employeeService"
 
-interface AddEmployee {
-    departments: Department[]
-    onAddEmployee: (employee: Employee, departmentName: string) => void
-    validationMessage: string
+interface AddEmployeeProps {
+  departments: Department[]
+  onAddEmployee: (success: boolean, error?: string) => void
 }
 
 export default function AddEmployeeToList({
-    departments,
-    onAddEmployee,
-    validationMessage,
-}: AddEmployee) {
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [department, setDepartment] = useState('')
+  departments,
+  onAddEmployee,
+}: AddEmployeeProps) {
+  // Create form inputs with validation methods
+  const firstName = useFormInput(
+    (value) => employeeService.validateFirstName(value),
+    ""
+  )
+  
+  const lastName = useFormInput(
+    (value) => employeeService.validateLastName(value),
+    ""
+  )
+  
+  const department = useFormInput(
+    (value) => employeeService.validateDepartment(value),
+    departments[0]?.departmentName || ""
+  )
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
+  const [submitError, setSubmitError] = useState<string>("")
 
-        const newEmployee: Employee = {
-            firstName: firstName.trim(),
-            lastName: lastName.trim(),
-        }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    setSubmitError("")
 
-        onAddEmployee(newEmployee, department)
+    // Validate all inputs
+    const firstNameValid = firstName.validateForm()
+    const lastNameValid = lastName.validateForm()
+    const departmentValid = department.validateForm()
 
-        setFirstName('')
-        setLastName('')
-        setDepartment('')
-    
+    if (!firstNameValid.isValid || !lastNameValid.isValid || !departmentValid.isValid) {
+      return
     }
 
-    return (
+    // All valid, attempt to create employee through service
+    const result = employeeService.createEmployee(
+      String(firstName.inputValue),
+      String(lastName.inputValue),
+      String(department.inputValue)
+    )
+
+    if (result.isValid) {
+      // Success - reset form and notify parent
+      firstName.setValue("")
+      lastName.setValue("")
+      department.setValue(departments[0]?.departmentName || "")
+      firstName.setError(null)
+      lastName.setError(null)
+      department.setError(null)
+      setSubmitError("")
+      
+      onAddEmployee(true)
+    } else {
+      // Failure - show error
+      setSubmitError(result.error || "Failed to create employee")
+      onAddEmployee(false, result.error)
+    }
+  }
+
+  return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 border rounded">
       <h2 className="text-lg font-semibold">Add New Employee</h2>
 
-      {validationMessage && (
-        <p className="text-red-500 text-sm">{validationMessage}</p>
+      {submitError && (
+        <p className="text-red-500 text-sm">{submitError}</p>
       )}
 
       <section className="flex flex-col gap-1">
@@ -47,11 +83,12 @@ export default function AddEmployeeToList({
         <input
           id="firstName"
           type="text"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
+          value={firstName.inputValue}
+          onChange={firstName.onChange}
           placeholder="Jane"
           className="border rounded px-3 py-2 text-sm"
         />
+        {firstName.error && <p className="text-red-500 text-xs">{firstName.error}</p>}
       </section>
 
       <section className="flex flex-col gap-1">
@@ -61,11 +98,12 @@ export default function AddEmployeeToList({
         <input
           id="lastName"
           type="text"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
+          value={lastName.inputValue}
+          onChange={lastName.onChange}
           placeholder="Smith"
           className="border rounded px-3 py-2 text-sm"
         />
+        {lastName.error && <p className="text-red-500 text-xs">{lastName.error}</p>}
       </section>
 
       <section className="flex flex-col gap-1">
@@ -74,17 +112,17 @@ export default function AddEmployeeToList({
         </label>
         <select
           id="department"
-          value={department}
-          onChange={(e) => setDepartment(e.target.value)}
+          value={department.inputValue}
+          onChange={department.onChange}
           className="border rounded px-3 py-2 text-sm"
         >
-          <option value="">Select a department...</option>
           {departments.map((dept) => (
             <option key={dept.departmentName} value={dept.departmentName}>
               {dept.departmentName}
             </option>
           ))}
         </select>
+        {department.error && <p className="text-red-500 text-xs">{department.error}</p>}
       </section>
 
       <button
@@ -95,5 +133,4 @@ export default function AddEmployeeToList({
       </button>
     </form>
   )
-
 }

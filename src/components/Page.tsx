@@ -1,28 +1,21 @@
 import Main from "./Main"
 import { useState } from "react"
-import type { Department, Employee } from "../types/Employee"
-import employeeData from "../data/employees.json"
+import type { Department } from "../types/Employee"
+import { employeeRepository } from "../repositories/employeeRepository"
 import AddEmployeeToList from "./employees/AddEmployeeToList"
 
 function Page() {
-  const [departments, setDepartments] = useState<Department[]>(employeeData)
-  const [validationMessage, setValidationMessage] = useState<string>("")
+  const [departments, setDepartments] = useState<Department[]>(() => 
+    employeeRepository.getDepartments()
+  )
 
-  const handleAddEmployee = (
-    newEmployee: Employee, departmentName: string
-  ) => {
-    if (newEmployee.firstName.length < 2) {
-      setValidationMessage("First name must be at least 2 characters.")
-      return
+  const handleAddEmployee = (success: boolean, error?: string) => {
+    if (success) {
+      const updatedDepts = employeeRepository.getDepartments()
+      setDepartments([...updatedDepts])
+    } else {
+      console.error("Failed to add employee:", error)
     }
-
-    setValidationMessage("")
-
-    setDepartments((prevDepartments) =>
-      prevDepartments.map((dept) =>
-      dept.departmentName === departmentName
-        ? { ...dept, employees: [...dept.employees, newEmployee]}
-        : dept))
   }
 
   return (
@@ -31,7 +24,6 @@ function Page() {
       <AddEmployeeToList
         departments={departments}
         onAddEmployee={handleAddEmployee}
-        validationMessage={validationMessage}
       />
     </>
   )
