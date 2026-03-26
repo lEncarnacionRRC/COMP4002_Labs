@@ -1,4 +1,4 @@
-import { Department } from '../types/Employee'
+import type { Department } from '../types/Employee'
 import employeeData from '../data/employees.json'
 
 function Main() {
