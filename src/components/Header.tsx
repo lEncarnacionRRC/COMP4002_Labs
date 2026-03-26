@@ -1,7 +1,7 @@
-function Header() {
+export function Header() {
   return (
     <header>
-      <h1>Employee Directory</h1>
+      <h1>PiXELL River Directory</h1>
     </header>
   )
 }

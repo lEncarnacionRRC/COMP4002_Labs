@@ -1,19 +1,20 @@
 import type { Department } from "../types/Employee"
+import "./employees/AddEmployeeToList.css"
 
 function Main({ departments }: { departments: Department[] }) {
   return (
     <main id="employee-list">
       {departments.map((department) => (
-        <div key={department.departmentName}>
-          <h3>{department.departmentName}</h3>
-          <ul>
-            {department.employees.map((emp, index) => (
-              <li key={`${emp.firstName}-${emp.lastName}-${index}`}>
-                {emp.firstName} {emp.lastName}
-              </li>
-            ))}
-          </ul>
-        </div>
+        department.employees.map((emp, index) => (
+          <div key={`${emp.firstName}-${emp.lastName}-${index}`} className="employee-item">
+            <div className="employee-name">
+              {emp.firstName} {emp.lastName}
+            </div>
+            <div className="employee-department">
+              {department.departmentName}
+            </div>
+          </div>
+        ))
       ))}
     </main>
   )

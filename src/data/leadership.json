@@ -1,0 +1,176 @@
+[
+  {
+    "departmentName": "Organization",
+    "employees": [
+      {
+        "role": "CEO/Chair of Board",
+        "firstName": "Jo-Anne",
+        "lastName": "Sinclair"
+      },
+      {
+        "role": "COO/VP Operations",
+        "firstName": "Jackson",
+        "lastName": "Smith"
+      },
+      {
+        "role": "CFO/VP Administration",
+        "firstName": "Susan",
+        "lastName": "Thomas"
+      },
+      {
+        "role": "VP Client Services",
+        "firstName": "Richa",
+        "lastName": "Kaur"
+      },
+      { "role": "CIO", "firstName": "Josee", "lastName": "Benjamin" },
+      {
+        "role": "VP Sales & Marketing",
+        "firstName": "Vincent",
+        "lastName": "Grey"
+      },
+      {
+        "role": "Director Financial and Audit Svcs",
+        "firstName": "Rupa",
+        "lastName": "Kharki (she/her/hers)"
+      },
+      {
+        "role": "Director Human Resources",
+        "firstName": "Xun",
+        "lastName": "Kuang"
+      },
+      {
+        "role": "Director Legal Services/General Counsel",
+        "firstName": "Stien",
+        "lastName": "Pedersen"
+      },
+      {
+        "role": "Director Information Technology",
+        "firstName": "Sandra",
+        "lastName": "Bear"
+      },
+      {
+        "role": "Director Information Security and CISSO",
+        "firstName": "Gus",
+        "lastName": "Blue"
+      },
+      { "role": "Director Accounting", "firstName": "Sam", "lastName": "Kong" },
+      {
+        "role": "Director Physical Security",
+        "firstName": "Valentine",
+        "lastName": "Smith"
+      },
+      {
+        "role": "Director Facilities",
+        "firstName": "Mariya",
+        "lastName": "Kaperski"
+      },
+      {
+        "role": "Manager, Business Continuity and Disaster Recovery",
+        "firstName": "Abd al-Hamid",
+        "lastName": "Alami"
+      },
+      {
+        "role": "Manager, Internal Audit",
+        "firstName": "Victoria",
+        "lastName": "Gray"
+      },
+      { "role": "Chief Architect", "firstName": "Cheryl", "lastName": "Guru" },
+      {
+        "role": "Manager, Security Architecture",
+        "firstName": "Jean",
+        "lastName": "Ngoy"
+      },
+      {
+        "role": "Solution Architect, Online Banking",
+        "firstName": "Kris",
+        "lastName": "Gold"
+      },
+      {
+        "role": "Manager, Application Solutions",
+        "firstName": "Isaac",
+        "lastName": "Smith"
+      },
+      {
+        "role": "Lead Developer, Online Banking",
+        "firstName": "Payton",
+        "lastName": "Frost"
+      },
+      {
+        "role": "Manager, Operational Risk",
+        "firstName": "Samantha",
+        "lastName": "Nettle"
+      },
+      {
+        "role": "Manager, Vendor Relations",
+        "firstName": "Yolanda",
+        "lastName": "Ferreira"
+      },
+      {
+        "role": "Manager, Purchasing",
+        "firstName": "Samir",
+        "lastName": "Hassan"
+      },
+      {
+        "role": "Manager, Communications",
+        "firstName": "Yuna",
+        "lastName": "Aikawa"
+      },
+      {
+        "role": "Manager Customer Experience and Community Eng.",
+        "firstName": "Jonathan",
+        "lastName": "Carberry"
+      },
+      { "role": "Manager of Sales", "firstName": "Roland", "lastName": "Wei" },
+      {
+        "role": "Manager, Marketing",
+        "firstName": "Pran",
+        "lastName": "Singh"
+      },
+      {
+        "role": "Business Analyst, Online Banking",
+        "firstName": "Linda",
+        "lastName": "Analyst"
+      },
+      {
+        "role": "Manager, Contract Management",
+        "firstName": "Esra",
+        "lastName": "Sedge"
+      },
+      {
+        "role": "Manager, Compliance Management",
+        "firstName": "Pranee",
+        "lastName": "Tan"
+      },
+      {
+        "role": "Manager IT End User Service Desk",
+        "firstName": "Karmen",
+        "lastName": "Spruce"
+      },
+      {
+        "role": "Manager IT End User Computing",
+        "firstName": "Haydar",
+        "lastName": "Katirci"
+      },
+      {
+        "role": "Manager IT Telecom and Infrastructure",
+        "firstName": "Jill",
+        "lastName": "Harkness"
+      },
+      {
+        "role": "Manager, Data Center and Hosting Services",
+        "firstName": "Tim",
+        "lastName": "Morrison"
+      },
+      {
+        "role": "Manager of IT Risk Management",
+        "firstName": "Aleksandr",
+        "lastName": "Milosevic"
+      },
+      {
+        "role": "Manager IT, Project Management Office",
+        "firstName": "Jim",
+        "lastName": "Wingnut"
+      }
+    ]
+  }
+]
