@@ -1,9 +1,6 @@
-import type { Department } from '../types/Employee'
-import employeeData from '../data/employees.json'
+import type { Department } from "../types/Employee"
 
-function Main() {
-  const departments: Department[] = employeeData
-
+function Main({ departments }: { departments: Department[] }) {
   return (
     <main id="employee-list">
       {departments.map((department) => (
