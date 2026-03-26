@@ -1,10 +1,8 @@
-import Header from "./Header"
-import Footer from "./Footer"
 import Main from "./Main"
 import { useState } from "react"
 import type { Department, Employee } from "../types/Employee"
 import employeeData from "../data/employees.json"
-import AddEmployeeToList from "./AddEmployeeToList"
+import AddEmployeeToList from "./employees/AddEmployeeToList"
 
 function Page() {
   const [departments, setDepartments] = useState<Department[]>(employeeData)
@@ -29,15 +27,12 @@ function Page() {
 
   return (
     <>
-      <Header />
       <Main departments={departments}/>
       <AddEmployeeToList
         departments={departments}
         onAddEmployee={handleAddEmployee}
         validationMessage={validationMessage}
       />
-
-      <Footer />
     </>
   )
 }

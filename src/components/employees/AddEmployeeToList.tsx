@@ -1,5 +1,5 @@
 import { useState } from "react"
-import type { Department, Employee } from "../types/Employee"
+import type { Department, Employee } from "../../types/Employee"
 
 interface AddEmployee {
     departments: Department[]
