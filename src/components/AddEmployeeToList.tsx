@@ -4,24 +4,20 @@ import type { Department, Employee } from "../types/Employee"
 interface AddEmployee {
     departments: Department[]
     onAddEmployee: (employee: Employee, departmentName: string) => void
+    validationMessage: string
 }
 
 export default function AddEmployeeToList({
     departments,
     onAddEmployee,
+    validationMessage,
 }: AddEmployee) {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [department, setDepartment] = useState('')
-    const [validationMessage, setValidationMessage] = useState('')
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-
-        if (!firstName || !lastName || !department) {
-            setValidationMessage("All fields are required.")
-            return
-        }
 
         const newEmployee: Employee = {
             firstName: firstName.trim(),
@@ -33,7 +29,6 @@ export default function AddEmployeeToList({
         setFirstName('')
         setLastName('')
         setDepartment('')
-        setValidationMessage('')
     
     }
 

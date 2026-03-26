@@ -13,6 +13,11 @@ function Page() {
   const handleAddEmployee = (
     newEmployee: Employee, departmentName: string
   ) => {
+    if (newEmployee.firstName.length < 2) {
+      setValidationMessage("First name must be at least 2 characters.")
+      return
+    }
+
     setValidationMessage("")
 
     setDepartments((prevDepartments) =>
