@@ -1,33 +1,43 @@
 import type { Department, Employee } from "../types/Employee"
 import employeeData from "../data/employees.json"
 
-class EmployeeRepository {
-  private departments: Department[] = employeeData
+const departments: Department[] = [...employeeData]
 
-  // Get all departments with employees
-  getDepartments(): Department[] {
-    return this.departments
-  }
+export const employeeRepository = {
+  getAll(): Department[] {
+    return [...departments]
+  },
 
-  // Get a specific department
   getDepartment(departmentName: string): Department | undefined {
-    return this.departments.find(dept => dept.departmentName === departmentName)
-  }
+    return departments.find(dept => dept.departmentName === departmentName)
+  },
 
-  createEmployee(departmentName: string, employee: Employee): Employee | null {
-    const department = this.getDepartment(departmentName)
-    
-    if (!department) {
-      return null
-    }
-
-    department.employees.push(employee)
-    return employee
-  }
+  getDepartments(): Department[] {
+    return [...departments]
+  },
 
   getAllEmployees(): Employee[] {
-    return this.departments.flatMap(dept => dept.employees)
+    return departments.flatMap(dept => dept.employees)
+  },
+
+  add(departmentName: string, employee: Employee): void {
+    const department = this.getDepartment(departmentName)
+    if (department) {
+      department.employees.push(employee)
+    }
+  },
+
+  update(departmentName: string, employeeIndex: number, updatedEmployee: Employee): void {
+    const department = this.getDepartment(departmentName)
+    if (department && employeeIndex >= 0 && employeeIndex < department.employees.length) {
+      department.employees[employeeIndex] = updatedEmployee
+    }
+  },
+
+  delete(departmentName: string, employeeIndex: number): void {
+    const department = this.getDepartment(departmentName)
+    if (department && employeeIndex >= 0 && employeeIndex < department.employees.length) {
+      department.employees.splice(employeeIndex, 1)
+    }
   }
 }
-
-export const employeeRepository = new EmployeeRepository()
