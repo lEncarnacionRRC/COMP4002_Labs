@@ -39,13 +39,6 @@ export const organizationService = {
       return { isValid: false, error: "Role is required" };
     }
 
-    const leadership = organizationRepository.getAll();
-    const roleExists = leadership.some(l => l.role === roleStr);
-
-    if (roleExists) {
-      return { isValid: false, error: `Role "${roleStr}" is already occupied` };
-    }
-
     return { isValid: true, error: "" };
   },
 
@@ -71,6 +64,15 @@ export const organizationService = {
       isValid: errors.length === 0,
       errors
     };
+  },
+
+  async getLeadership(): Promise<Leadership[]> {
+    try {
+      return await organizationRepository.getAll();
+    } catch {
+      console.error("Failed to fetch leadership");
+      return [];
+    }
   },
 
   createLeader(
@@ -102,9 +104,5 @@ export const organizationService = {
     organizationRepository.add(newLeader);
 
     return { isValid: true, error: "", leader: newLeader };
-  },
-
-  getLeadership() {
-    return organizationRepository.getAll();
   }
 };

@@ -12,7 +12,6 @@ export default function AddEmployeeToList({
   departments,
   onAddEmployee,
 }: AddEmployeeProps) {
-  // Create form inputs with validation methods
   const firstName = useFormInput(
     (value) => employeeService.validateFirstName(value),
     ""
@@ -22,49 +21,63 @@ export default function AddEmployeeToList({
     (value) => employeeService.validateLastName(value),
     ""
   )
-  
-  const department = useFormInput(
-    (value) => employeeService.validateDepartment(value),
+
+  const [departmentValue, setDepartmentValue] = useState(
     departments[0]?.departmentName || ""
   )
-
+  const [departmentError, setDepartmentError] = useState<string | null>(null)
   const [submitError, setSubmitError] = useState<string>("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitError("")
+    setIsSubmitting(true)
 
-    // Validate all inputs
-    const firstNameValid = firstName.validateForm()
-    const lastNameValid = lastName.validateForm()
-    const departmentValid = department.validateForm()
+    try {
+      const firstNameValid = firstName.validateForm()
+      const lastNameValid = lastName.validateForm()
 
-    if (!firstNameValid.isValid || !lastNameValid.isValid || !departmentValid.isValid) {
-      return
-    }
+      if (!firstNameValid.isValid || !lastNameValid.isValid) {
+        setIsSubmitting(false)
+        return
+      }
 
-    // All valid, attempt to create employee through service
-    const result = employeeService.createEmployee(
-      String(firstName.inputValue),
-      String(lastName.inputValue),
-      String(department.inputValue)
-    )
+      if (!departmentValue) {
+        setDepartmentError("Department is required")
+        setIsSubmitting(false)
+        return
+      }
 
-    if (result.isValid) {
-      // Success - reset form and notify parent
-      firstName.setValue("")
-      lastName.setValue("")
-      department.setValue(departments[0]?.departmentName || "")
-      firstName.setError(null)
-      lastName.setError(null)
-      department.setError(null)
-      setSubmitError("")
-      
-      onAddEmployee(true)
-    } else {
-      // Failure - show error
-      setSubmitError(result.error || "Failed to create employee")
-      onAddEmployee(false, result.error)
+      setDepartmentError(null)
+
+      const result = await employeeService.createEmployee(
+        String(firstName.inputValue),
+        String(lastName.inputValue),
+        String(departmentValue)
+      )
+
+      if (result.isValid) {
+        // Success - reset form and notify parent
+        firstName.setValue("")
+        lastName.setValue("")
+        setDepartmentValue(departments[0]?.departmentName || "")
+        firstName.setError(null)
+        lastName.setError(null)
+        setDepartmentError(null)
+        setSubmitError("")
+        
+        onAddEmployee(true)
+      } else {
+        setSubmitError(result.error || "Failed to create employee")
+        onAddEmployee(false, result.error)
+      }
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred"
+      setSubmitError(errorMessage)
+      onAddEmployee(false, errorMessage)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -87,6 +100,7 @@ export default function AddEmployeeToList({
           onChange={firstName.onChange}
           placeholder="Jane"
           className="border rounded px-3 py-2 text-sm"
+          disabled={isSubmitting}
         />
         {firstName.error && <p className="text-red-500 text-xs">{firstName.error}</p>}
       </section>
@@ -102,6 +116,7 @@ export default function AddEmployeeToList({
           onChange={lastName.onChange}
           placeholder="Smith"
           className="border rounded px-3 py-2 text-sm"
+          disabled={isSubmitting}
         />
         {lastName.error && <p className="text-red-500 text-xs">{lastName.error}</p>}
       </section>
@@ -112,9 +127,13 @@ export default function AddEmployeeToList({
         </label>
         <select
           id="department"
-          value={department.inputValue}
-          onChange={department.onChange}
+          value={departmentValue}
+          onChange={(e) => {
+            setDepartmentValue(e.target.value)
+            setDepartmentError(null)
+          }}
           className="border rounded px-3 py-2 text-sm"
+          disabled={isSubmitting}
         >
           {departments.map((dept) => (
             <option key={dept.departmentName} value={dept.departmentName}>
@@ -122,14 +141,15 @@ export default function AddEmployeeToList({
             </option>
           ))}
         </select>
-        {department.error && <p className="text-red-500 text-xs">{department.error}</p>}
+        {departmentError && <p className="text-red-500 text-xs">{departmentError}</p>}
       </section>
 
       <button
         type="submit"
-        className="bg-blue-600 text-white rounded px-4 py-2 text-sm hover:bg-blue-700 transition-colors"
+        className="bg-blue-600 text-white rounded px-4 py-2 text-sm hover:bg-blue-700 transition-colors disabled:bg-gray-400"
+        disabled={isSubmitting}
       >
-        Add Employee
+        {isSubmitting ? "Adding..." : "Add Employee"}
       </button>
     </form>
   )

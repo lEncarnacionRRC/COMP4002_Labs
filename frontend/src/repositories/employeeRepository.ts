@@ -1,43 +1,67 @@
-import type { Department, Employee } from "../types/Employee"
-import employeeData from "../data/employees.json"
+import type { Department, Employee } from "@fs-lab/shared-types"
 
-const departments: Department[] = [...employeeData]
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
 
 export const employeeRepository = {
-  getAll(): Department[] {
-    return [...departments]
+  async getAll(): Promise<Department[]> {
+    const response = await fetch(`${API_BASE_URL}/employees`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch employees");
+    }
+    const data = await response.json();
+    return data.data || [];
   },
 
-  getDepartment(departmentName: string): Department | undefined {
-    return departments.find(dept => dept.departmentName === departmentName)
+  async getDepartment(departmentName: string): Promise<Department | undefined> {
+    const departments = await this.getAll();
+    return departments.find(dept => dept.departmentName === departmentName);
   },
 
-  getDepartments(): Department[] {
-    return [...departments]
+  async getDepartments(): Promise<Department[]> {
+    const response = await fetch(`${API_BASE_URL}/departments`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch departments");
+    }
+    const data = await response.json();
+    return data.data || [];
   },
 
-  getAllEmployees(): Employee[] {
-    return departments.flatMap(dept => dept.employees)
+  async getAllEmployees(): Promise<Employee[]> {
+    const response = await fetch(`${API_BASE_URL}/employees`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch employees");
+    }
+    const data = await response.json();
+    return data.data || [];
   },
 
-  add(departmentName: string, employee: Employee): void {
-    const department = this.getDepartment(departmentName)
-    if (department) {
-      department.employees.push(employee)
+  async add(departmentName: string, employee: Employee): Promise<void> {
+    const response = await fetch(`${API_BASE_URL}/employees`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        firstName: employee.firstName,
+        lastName: employee.lastName,
+        departmentId: departmentName
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error("Failed to create employee");
     }
   },
 
-  update(departmentName: string, employeeIndex: number, updatedEmployee: Employee): void {
-    const department = this.getDepartment(departmentName)
-    if (department && employeeIndex >= 0 && employeeIndex < department.employees.length) {
-      department.employees[employeeIndex] = updatedEmployee
-    }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async update(_departmentName: string, _employeeIndex: number, _updatedEmployee: Employee): Promise<void> {
+    // Not currently required by frontend - no PUT endpoint exposed
+    console.warn("Update operation not implemented in backend");
   },
 
-  delete(departmentName: string, employeeIndex: number): void {
-    const department = this.getDepartment(departmentName)
-    if (department && employeeIndex >= 0 && employeeIndex < department.employees.length) {
-      department.employees.splice(employeeIndex, 1)
-    }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async delete(_departmentName: string, _employeeIndex: number): Promise<void> {
+    // Not currently required by frontend - no DELETE endpoint exposed
+    console.warn("Delete operation not implemented in backend");
   }
-}
+};

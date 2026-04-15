@@ -1,5 +1,5 @@
 import type { Validation } from "../hooks/useFormInput";
-import type { Employee } from "../types/Employee";
+import type { Employee } from "@fs-lab/shared-types";
 import { employeeRepository } from "../repositories/employeeRepository";
 
 type ValidationResult = {
@@ -32,16 +32,20 @@ export const employeeService = {
     return { isValid: true, error: "" };
   },
 
-  validateDepartment(departmentName: string | number): Validation {
-    const dept = String(departmentName).trim();
-    const departments = employeeRepository.getAll();
-    const exists = departments.some(d => d.departmentName === dept);
+  async validateDepartment(departmentName: string | number): Promise<Validation> {
+    try {
+      const departments = await employeeRepository.getDepartments();
+      const dept = String(departmentName).trim();
+      const exists = departments.some(d => d.departmentName === dept);
 
-    if (!exists) {
-      return { isValid: false, error: "Department does not exist" };
+      if (!exists) {
+        return { isValid: false, error: "Department does not exist" };
+      }
+
+      return { isValid: true, error: "" };
+    } catch {
+      return { isValid: false, error: "Failed to validate department" };
     }
-
-    return { isValid: true, error: "" };
   },
 
   validateEmployee(employee: Omit<Employee, "id">): ValidationResult {
@@ -61,41 +65,55 @@ export const employeeService = {
     };
   },
 
-  createEmployee(
+  async createEmployee(
     firstName: string,
     lastName: string,
     departmentName: string
-  ): { isValid: boolean; error: string; employee?: Employee } {
-    const deptValidation = this.validateDepartment(departmentName);
-    if (!deptValidation.isValid) {
-      return { isValid: false, error: deptValidation.error };
+  ): Promise<{ isValid: boolean; error: string; employee?: Employee }> {
+    try {
+      const deptValidation = await this.validateDepartment(departmentName);
+      if (!deptValidation.isValid) {
+        return { isValid: false, error: deptValidation.error };
+      }
+
+      const firstNameValidation = this.validateFirstName(firstName);
+      if (!firstNameValidation.isValid) {
+        return { isValid: false, error: firstNameValidation.error };
+      }
+
+      const lastNameValidation = this.validateLastName(lastName);
+      if (!lastNameValidation.isValid) {
+        return { isValid: false, error: lastNameValidation.error };
+      }
+
+      const newEmployee: Employee = {
+        firstName: firstName.trim(),
+        lastName: lastName.trim()
+      };
+
+      await employeeRepository.add(departmentName, newEmployee);
+
+      return { isValid: true, error: "", employee: newEmployee };
+    } catch {
+      return { isValid: false, error: "Failed to create employee" };
     }
-
-    const firstNameValidation = this.validateFirstName(firstName);
-    if (!firstNameValidation.isValid) {
-      return { isValid: false, error: firstNameValidation.error };
-    }
-
-    const lastNameValidation = this.validateLastName(lastName);
-    if (!lastNameValidation.isValid) {
-      return { isValid: false, error: lastNameValidation.error };
-    }
-
-    const newEmployee: Employee = {
-      firstName: firstName.trim(),
-      lastName: lastName.trim()
-    };
-
-    employeeRepository.add(departmentName, newEmployee);
-
-    return { isValid: true, error: "", employee: newEmployee };
   },
 
-  getDepartments() {
-    return employeeRepository.getAll();
+  async getDepartments() {
+    try {
+      return await employeeRepository.getDepartments();
+    } catch (error) {
+      console.error("Failed to fetch departments:", error);
+      return [];
+    }
   },
 
-  getAllEmployees() {
-    return employeeRepository.getAllEmployees();
+  async getAllEmployees() {
+    try {
+      return await employeeRepository.getAllEmployees();
+    } catch (error) {
+      console.error("Failed to fetch employees:", error);
+      return [];
+    }
   }
 };

@@ -1,9 +1,39 @@
 import type { Leadership } from "../../types/Employee"
-import leadershipData from "../../data/leadership.json"
+import { organizationService } from "../../services/organizationService"
+import { useState, useEffect } from "react"
 import "./OrganizationManagement.css"
 
 function OrganizationManagement() {
-  const leaders: Leadership[] = leadershipData[0]?.employees || []
+  const [leaders, setLeaders] = useState<Leadership[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const loadLeadership = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+        const leadershipData = await organizationService.getLeadership()
+        setLeaders(leadershipData)
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "Failed to load leadership data"
+        setError(errorMessage)
+        console.error("Error loading leadership:", errorMessage)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadLeadership()
+  }, [])
+
+  if (loading) {
+    return <main id="leadership-list">Loading...</main>
+  }
+
+  if (error) {
+    return <main id="leadership-list"><p className="text-red-500">Error: {error}</p></main>
+  }
 
   return (
     <main id="leadership-list">

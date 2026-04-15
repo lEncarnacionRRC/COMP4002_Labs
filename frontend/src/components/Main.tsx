@@ -5,7 +5,7 @@ function Main({ departments }: { departments: Department[] }) {
   return (
     <main id="employee-list">
       {departments.map((department) => (
-        department.employees.map((emp, index) => (
+        (department.employees || []).map((emp, index) => (
           <div key={`${emp.firstName}-${emp.lastName}-${index}`} className="employee-item">
             <div className="employee-name">
               {emp.firstName} {emp.lastName}
