@@ -1,11 +1,11 @@
-import type { Department } from "../types/Employee"
+import type { Department, Employee } from "../types/Employee"
 import "./employees/AddEmployeeToList.css"
 
 function Main({ departments }: { departments: Department[] }) {
   return (
     <main id="employee-list">
       {departments.map((department) => (
-        (department.employees || []).map((emp, index) => (
+        (department.employees || []).map((emp: Employee, index: number) => (
           <div key={`${emp.firstName}-${emp.lastName}-${index}`} className="employee-item">
             <div className="employee-name">
               {emp.firstName} {emp.lastName}

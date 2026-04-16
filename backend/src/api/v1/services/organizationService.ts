@@ -8,7 +8,7 @@ import { leadershipData } from "../../../data/leadershipData";
  */
 export const getLeadershipById = async (id: string): Promise<Leadership | null> => {
     try {
-        const leader = leadershipData.find(lead => lead.id === id);
+        const leader = leadershipData.find((lead: Leadership) => lead.id === id);
         return leader || null;
     } catch (error) {
         console.error('Leadership member not found:', error);
@@ -61,7 +61,7 @@ export const updateLeadership = async (
     data: Partial<Leadership>
 ): Promise<Leadership | null> => {
     try {
-        const index = leadershipData.findIndex(lead => lead.id === id);
+        const index = leadershipData.findIndex((lead: Leadership) => lead.id === id);
         if (index === -1) return null;
 
         leadershipData[index] = { ...leadershipData[index], ...data };
@@ -79,7 +79,7 @@ export const updateLeadership = async (
  */
 export const deleteLeadership = async (id: string): Promise<boolean> => {
     try {
-        const index = leadershipData.findIndex(lead => lead.id === id);
+        const index = leadershipData.findIndex((lead: Leadership) => lead.id === id);
         if (index === -1) return false;
 
         leadershipData.splice(index, 1);

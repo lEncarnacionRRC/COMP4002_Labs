@@ -8,7 +8,7 @@ import { departmentData } from "../../../data/departmentData";
  */
 export const getDepartmentById = async (id: string): Promise<Department | null> => {
     try {
-        const department = departmentData.find(dept => dept.id === id);
+        const department = departmentData.find((dept: Department) => dept.id === id);
         return department || null;
     } catch (error) {
         console.error("Department not found:", error);
@@ -61,7 +61,7 @@ export const updateDepartment = async (
     data: Partial<Department>
 ): Promise<Department | null> => {
     try {
-        const index = departmentData.findIndex(dept => dept.id === id);
+        const index = departmentData.findIndex((dept: Department) => dept.id === id);
         if (index === -1) return null;
 
         departmentData[index] = { ...departmentData[index], ...data };
@@ -79,7 +79,7 @@ export const updateDepartment = async (
  */
 export const deleteDepartment = async (id: string): Promise<boolean> => {
     try {
-        const index = departmentData.findIndex(dept => dept.id === id);
+        const index = departmentData.findIndex((dept: Department) => dept.id === id);
         if (index === -1) return false;
 
         departmentData.splice(index, 1);

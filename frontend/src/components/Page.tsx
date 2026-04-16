@@ -19,7 +19,7 @@ function Page() {
       const employees = await employeeService.getAllEmployees()
 
       // Restructure employees into departments
-      const departmentsWithEmployees: Department[] = depts.map(dept => ({
+      const departmentsWithEmployees: Department[] = depts.map((dept: Department) => ({
         ...dept,
         employees: employees.filter((emp: Employee) => emp.departmentId === dept.id) || []
       }))

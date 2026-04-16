@@ -1,5 +1,5 @@
 import type { Validation } from "../hooks/useFormInput";
-import type { Employee } from "@fs-lab/shared-types";
+import type { Employee, Department } from "@fs-lab/shared-types";
 import { employeeRepository } from "../repositories/employeeRepository";
 
 type ValidationResult = {
@@ -36,7 +36,7 @@ export const employeeService = {
     try {
       const departments = await employeeRepository.getDepartments();
       const dept = String(departmentName).trim();
-      const exists = departments.some(d => d.departmentName === dept);
+      const exists = departments.some((d: Department) => d.departmentName === dept);
 
       if (!exists) {
         return { isValid: false, error: "Department does not exist" };

@@ -13,12 +13,12 @@ export default function AddEmployeeToList({
   onAddEmployee,
 }: AddEmployeeProps) {
   const firstName = useFormInput(
-    (value) => employeeService.validateFirstName(value),
+    (value: string | number) => employeeService.validateFirstName(value),
     ""
   )
   
   const lastName = useFormInput(
-    (value) => employeeService.validateLastName(value),
+    (value: string | number) => employeeService.validateLastName(value),
     ""
   )
 

@@ -2,6 +2,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "composite": true,
+    "tsBuildInfoFile": "../node_modules/.tmp/tsconfig.shared.tsbuildinfo",
     "target": "ES2022",
     "module": "ESNext",
     "declaration": true,
