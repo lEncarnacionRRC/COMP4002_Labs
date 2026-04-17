@@ -7,6 +7,8 @@ const router: Router = express.Router();
 
 router.get("/organization", organizationController.getOrganization);
 
+router.get("/departments", organizationController.getDepartments);
+
 router.get("/departments/:id", organizationController.getDepartment);
 
 router.post(

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import type { Department } from "../../types/Employee"
 import { useFormInput } from "../../hooks/useFormInput"
 import { employeeService } from "../../services/employeeService"
@@ -22,12 +22,17 @@ export default function AddEmployeeToList({
     ""
   )
 
-  const [departmentValue, setDepartmentValue] = useState(
-    departments[0]?.departmentName || ""
-  )
+  const [departmentValue, setDepartmentValue] = useState("")
   const [departmentError, setDepartmentError] = useState<string | null>(null)
   const [submitError, setSubmitError] = useState<string>("")
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  // Update department value when departments load
+  useEffect(() => {
+    if (departments.length > 0 && !departmentValue) {
+      setDepartmentValue(departments[0].departmentName || "")
+    }
+  }, [departments])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -61,7 +66,7 @@ export default function AddEmployeeToList({
         // Success - reset form and notify parent
         firstName.setValue("")
         lastName.setValue("")
-        setDepartmentValue(departments[0]?.departmentName || "")
+        setDepartmentValue("")
         firstName.setError(null)
         lastName.setError(null)
         setDepartmentError(null)

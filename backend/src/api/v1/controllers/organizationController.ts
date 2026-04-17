@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { successResponse, errorResponse } from "../models/responseModel";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
+import * as departmentService from "../services/departmentService";
 
 export const getOrganization = async (
   _req: Request,
@@ -9,6 +10,19 @@ export const getOrganization = async (
 ): Promise<void> => {
   try {
     res.status(HTTP_STATUS.OK).json(successResponse({}, "Organization retrieved successfully."));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getDepartments = async (
+  _req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const departments = await departmentService.getAllDepartments();
+    res.status(HTTP_STATUS.OK).json(successResponse(departments, "Departments retrieved successfully."));
   } catch (error) {
     next(error);
   }
