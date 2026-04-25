@@ -1,0 +1,1 @@
+export type { Employee, Department, Leadership } from "@fs-lab/shared-types";
