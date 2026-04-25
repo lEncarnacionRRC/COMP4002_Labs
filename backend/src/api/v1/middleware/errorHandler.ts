@@ -4,10 +4,6 @@ import { errorResponse } from "../models/responseModel";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 
 /**
- * This code has come from my backend API project from last term.
- */
-
-/**
  * Global error handling express middleware
  * Catches all errors passed to next() and formats them into a consistent response
  *
@@ -22,6 +18,7 @@ import { HTTP_STATUS } from "../../../constants/httpConstants";
  * @param _next - Express next function (unused but required for Express middleware signature)
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 const errorHandler = (
     err: Error | null,
     _req: Request,

@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "dev": "npm --workspace=frontend run dev",
-    "build": "npm run build --workspaces",
+    "build": "npm --workspace=shared run build && npm run build --workspaces",
     "lint": "npm run lint --workspaces"
   }
 }
